@@ -1,53 +1,25 @@
 package com.crj.consultoria.springteste.service;
 
-import java.util.Optional;
+import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.crj.consultoria.springteste.dto.PessoaDTO;
 import com.crj.consultoria.springteste.entity.Pessoa;
-import com.crj.consultoria.springteste.repository.PessoaRepository;
-import com.crj.consultoria.springteste.repository.TarefaRepository;
-import com.crj.consultoria.springteste.service.exception.ObjectNotFoundException;
-import com.crj.consultoria.springteste.shared.Mensagens;
 
-@Service
-public class PessoaService {
+@Component
+public interface PessoaService {
 	
-	@Autowired
-	PessoaRepository repository;
+	String cadastrarPessoa(PessoaDTO dto);
 	
-	@Autowired
-	TarefaRepository tarefaRepository;
+	String editarPessoa(Long id, PessoaDTO dto);
 	
-	public String cadastrarPessoa(PessoaDTO dto) {
-		Pessoa pessoa = new Pessoa();
-		repository.save(montarEntity(dto, pessoa));
-		return Mensagens.CADASTRO_SUCESSO;
-	}
+	String removerPessoa(Long id);
 	
-	public String editarPessoa(Long id, PessoaDTO dto) {
-		Pessoa pessoa = getEntity(id);
-		repository.save(montarEntity(dto, pessoa));
-		return Mensagens.ATUALIZAR_SUCESSO;
-	}
+	Pessoa getEntity(Long id);
 	
-	public String removerPessoa(Long id) {
-		repository.delete(getEntity(id));
-		return Mensagens.DELETAR_SUCESSO;
-	}
+	List<Pessoa> findPessoaByDepartamento(Integer id);
 	
-	private Pessoa montarEntity(PessoaDTO dto, Pessoa entity) {
-		entity.setNome(dto.getNome());
-		entity.setDepartamento(dto.getDepartamento());
-		return entity;
-	}
-	
-	public Pessoa getEntity(Long id) {
-        Optional<Pessoa> obj = repository.findById(id);
-        return obj.orElseThrow(() -> new ObjectNotFoundException(
-        		Mensagens.REGISTRO_NAO_ENCONTRADO + " id: " + id));
-    }
+	List<PessoaDTO> buscarPessoaPorNomeEPeriodo();
 
 }

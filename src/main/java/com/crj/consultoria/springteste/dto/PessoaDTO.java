@@ -2,7 +2,7 @@ package com.crj.consultoria.springteste.dto;
 
 import java.util.List;
 
-import com.crj.consultoria.springteste.enuns.DepartamentoEnum;
+import com.crj.consultoria.springteste.entity.Pessoa;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,10 +15,22 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PessoaDTO extends BaseDTO {
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
 	private String nome;
-	private DepartamentoEnum departamento;
+	private Integer departamento;
+	private List<PessoaMediaDTO> media;
+	
+	public PessoaDTO(Pessoa pessoa) {
+		this.id = pessoa.getId();
+		this.nome = pessoa.getNome();
+		this.departamento = pessoa.getDepartamento();
+	}
+	
+	
 	
 }

@@ -39,13 +39,20 @@ public class Tarefa implements Serializable {
 	private String titulo;
 	private String descricao;
 	private LocalDate prazo;
-	private DepartamentoEnum departamento;
-	private Integer duracao;
+	private Integer departamento;
+	private Double duracao;
 	private boolean finalizado;
 	
 	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "id_pessoa", referencedColumnName = "id")
 	private Pessoa pessoaAlocada;
+
+	public Tarefa(LocalDate prazo, Double duracao) {
+		this.prazo = prazo;
+		this.duracao = duracao;
+	}
 	
+	
+
 }

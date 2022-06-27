@@ -1,5 +1,7 @@
 package com.crj.consultoria.springteste.controller;
 
+import java.util.List;
+
 import javax.websocket.server.PathParam;
 
 import org.apache.catalina.connector.Response;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.crj.consultoria.springteste.dto.PessoaDTO;
 import com.crj.consultoria.springteste.service.PessoaService;
+import com.crj.consultoria.springteste.service.impl.PessoaServiceImpl;
 
 @RestController
 @RequestMapping(value = "/pessoas")
@@ -34,6 +37,11 @@ public class PessoaController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> removerPessoa(@PathVariable("id") Long id) {
         return ResponseEntity.ok().body(service.removerPessoa(id));
+    }
+    
+    @RequestMapping(value = "/gastos", method = RequestMethod.GET)
+    public ResponseEntity<List<PessoaDTO>> buscarPessoaPorNomeEPeriodo() {
+        return ResponseEntity.ok(service.buscarPessoaPorNomeEPeriodo());
     }
 
 }

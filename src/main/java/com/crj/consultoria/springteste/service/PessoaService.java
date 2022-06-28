@@ -21,5 +21,7 @@ public interface PessoaService {
 	List<Pessoa> findPessoaByDepartamento(Integer id);
 	
 	List<PessoaDTO> buscarPessoaPorNomeEPeriodo();
+	
+    List<PessoaDTO> buscarPessoas();
 
 }

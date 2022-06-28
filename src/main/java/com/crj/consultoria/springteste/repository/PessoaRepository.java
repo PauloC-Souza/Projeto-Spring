@@ -14,4 +14,7 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long>{
 	
 	@Query("SELECT p FROM Pessoa p WHERE p.departamento = :id ORDER BY p.id asc")
 	 List<Pessoa> findPessoaByDepartamento(@Param("id") Integer id);
+
+    @Query("SELECT count (p) FROM Pessoa p WHERE p.idDepartamento = :id")
+    Integer buscarTotalPessoasPorDepartamento(@Param("id") Integer idDepartamento);
 }

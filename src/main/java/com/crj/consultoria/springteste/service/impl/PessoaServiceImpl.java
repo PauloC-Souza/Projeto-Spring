@@ -11,6 +11,7 @@ import com.crj.consultoria.springteste.dto.PessoaDTO;
 import com.crj.consultoria.springteste.dto.PessoaMediaDTO;
 import com.crj.consultoria.springteste.entity.Pessoa;
 import com.crj.consultoria.springteste.entity.Tarefa;
+import com.crj.consultoria.springteste.enuns.DepartamentoEnum;
 import com.crj.consultoria.springteste.repository.PessoaRepository;
 import com.crj.consultoria.springteste.repository.TarefaRepository;
 import com.crj.consultoria.springteste.service.PessoaService;
@@ -65,6 +66,25 @@ public class PessoaServiceImpl implements PessoaService {
 		});
 		return dto;
 	}
+	
+	  @Override
+	    public List<PessoaDTO> buscarPessoas() {
+	        List<PessoaDTO> listaPessoasDTO = new ArrayList<>();
+	        List<Pessoa> listaPessoas = repository.findAll();
+	        if (!listaPessoas.isEmpty()) {
+	            for (Pessoa item : listaPessoas) {
+	                PessoaDTO pessoaDTO = new PessoaDTO();
+	                pessoaDTO.setNome(item.getNome());
+	                pessoaDTO.setDescricao(DepartamentoEnum.toEnum(item.getDepartamento()).getDescricao());
+	                pessoaDTO.setTodaHorasTarefas(tarefaRepository.buscarTotalHorasTarefasPorPessoa(item.getId()));
+	                listaPessoasDTO.add(pessoaDTO);
+	            }
+	            return listaPessoasDTO;
+	        } else {
+	            return new ArrayList<>();
+	        }
+
+	    }
 	
 	private Pessoa montarEntity(PessoaDTO dto, Pessoa entity) {
 		entity.setNome(dto.getNome());

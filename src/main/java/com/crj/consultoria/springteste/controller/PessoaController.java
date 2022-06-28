@@ -43,5 +43,10 @@ public class PessoaController {
     public ResponseEntity<List<PessoaDTO>> buscarPessoaPorNomeEPeriodo() {
         return ResponseEntity.ok(service.buscarPessoaPorNomeEPeriodo());
     }
+    
+    @RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<PessoaDTO>> buscarPessoas() {
+		return ResponseEntity.ok(service.buscarPessoas());
+	}
 
 }

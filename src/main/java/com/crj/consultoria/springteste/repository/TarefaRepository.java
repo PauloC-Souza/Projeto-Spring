@@ -17,4 +17,10 @@ public interface TarefaRepository extends JpaRepository<Tarefa, Long>{
 	
 	@Query("SELECT new Tarefa(t.prazo, AVG(t.duracao)) FROM Tarefa t WHERE t.pessoaAlocada.id = :id GROUP BY t.prazo")
 	 List<Tarefa> buscarMediaHorasGastasPorTarefas(@Param("id") Long id);
+	
+	 @Query("SELECT count (p) FROM Tarefa p WHERE p.idDepartamento = :id")
+	 Integer buscarTotalTarefasPorDepartamento(@Param("id") Integer idDepartamento);
+    
+    @Query("SELECT sum (t.duracao) FROM Tarefa t WHERE t.pessoa.id = :id")
+    Integer buscarTotalHorasTarefasPorPessoa(@Param("id") Long idPessoa);
 }

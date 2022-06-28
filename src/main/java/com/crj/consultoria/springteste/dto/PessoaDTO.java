@@ -23,6 +23,8 @@ public class PessoaDTO extends BaseDTO {
 	private Long id;
 	private String nome;
 	private Integer departamento;
+	private String descricao;
+	private Integer todaHorasTarefas;
 	private List<PessoaMediaDTO> media;
 	
 	public PessoaDTO(Pessoa pessoa) {

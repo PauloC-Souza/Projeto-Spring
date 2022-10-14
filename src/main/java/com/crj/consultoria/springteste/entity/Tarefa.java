@@ -3,17 +3,8 @@ package com.crj.consultoria.springteste.entity;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
-import com.crj.consultoria.springteste.enuns.DepartamentoEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
@@ -26,6 +17,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name= "tarefa")
 public class Tarefa implements Serializable {
 
 	/**
@@ -36,11 +28,16 @@ public class Tarefa implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Column(name = "titulo")
 	private String titulo;
+	@Column(name = "descricao")
 	private String descricao;
+	@Column(name = "prazo")
 	private LocalDate prazo;
-	private Integer departamento;
+	private Integer idDepartamento;
+	@Column(name = "duracao")
 	private Double duracao;
+	@Column(name = "finalizado")
 	private boolean finalizado;
 	
 	@JsonIgnore

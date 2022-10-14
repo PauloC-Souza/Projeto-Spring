@@ -44,7 +44,7 @@ public class TarefaServiceImpl implements TarefaService{
 	@Override
 	public String alocarPessoaTarefa(Long id) {
 		Tarefa tarefa = getEntity(id);
-		List<Pessoa> pessoa = pessoaService.findPessoaByDepartamento(tarefa.getDepartamento());
+		List<Pessoa> pessoa = pessoaService.findPessoaByDepartamento(tarefa.getIdDepartamento());
 		if(!pessoa.isEmpty()) {
 		tarefa.setPessoaAlocada(pessoa.get(0));
 		repository.save(tarefa);
@@ -71,7 +71,7 @@ public class TarefaServiceImpl implements TarefaService{
 	}
 	
 	private Tarefa montarTarefa(TarefaDTO dto, Tarefa entity) {
-		entity.setDepartamento(dto.getDepartamento());
+		entity.setIdDepartamento(dto.getDepartamento());
 		entity.setDescricao(dto.getDescricao());
 		entity.setDuracao(dto.getDuracao());
 		entity.setFinalizado(dto.isFinalizado());

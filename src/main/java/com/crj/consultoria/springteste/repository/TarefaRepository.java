@@ -13,14 +13,16 @@ import com.crj.consultoria.springteste.entity.Tarefa;
 public interface TarefaRepository extends JpaRepository<Tarefa, Long>{
 
 	@Query("SELECT t FROM Tarefa t WHERE t.pessoaAlocada = NULL ORDER BY t.prazo desc")
-	 List<Tarefa> listarTarefas();
-	
+ 	List<Tarefa> listarTarefas();
+
 	@Query("SELECT new Tarefa(t.prazo, AVG(t.duracao)) FROM Tarefa t WHERE t.pessoaAlocada.id = :id GROUP BY t.prazo")
 	 List<Tarefa> buscarMediaHorasGastasPorTarefas(@Param("id") Long id);
-	
-	 @Query("SELECT count (p) FROM Tarefa p WHERE p.idDepartamento = :id")
+
+	 @Query("SELECT count(t.idDepartamento) FROM Tarefa t WHERE t.idDepartamento = :id")
 	 Integer buscarTotalTarefasPorDepartamento(@Param("id") Integer idDepartamento);
-    
-    @Query("SELECT sum (t.duracao) FROM Tarefa t WHERE t.pessoa.id = :id")
+
+    @Query("SELECT sum(t.duracao) FROM Tarefa t WHERE t.pessoaAlocada.id = :id")
     Integer buscarTotalHorasTarefasPorPessoa(@Param("id") Long idPessoa);
+
 }
+

@@ -12,9 +12,9 @@ import com.crj.consultoria.springteste.entity.Pessoa;
 @Repository
 public interface PessoaRepository extends JpaRepository<Pessoa, Long>{
 	
-	@Query("SELECT p FROM Pessoa p WHERE p.departamento = :id ORDER BY p.id asc")
+	@Query("SELECT p FROM Pessoa p WHERE p.idDepartamento = :id ORDER BY p.id asc")
 	 List<Pessoa> findPessoaByDepartamento(@Param("id") Integer id);
 
-    @Query("SELECT count (p) FROM Pessoa p WHERE p.idDepartamento = :id")
+    @Query("SELECT count (p.idDepartamento) FROM Pessoa p WHERE p.idDepartamento = :id")
     Integer buscarTotalPessoasPorDepartamento(@Param("id") Integer idDepartamento);
 }

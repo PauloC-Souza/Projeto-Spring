@@ -3,7 +3,6 @@ package com.crj.consultoria.springteste.dto;
 import java.time.LocalDate;
 
 import com.crj.consultoria.springteste.entity.Tarefa;
-import com.crj.consultoria.springteste.enuns.DepartamentoEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
@@ -34,7 +33,7 @@ public class TarefaDTO extends BaseDTO {
 		this.titulo = tarefa.getTitulo();
 		this.descricao = tarefa.getDescricao();
 		this.prazo = tarefa.getPrazo();
-		this.departamento = tarefa.getDepartamento();
+		this.departamento = tarefa.getIdDepartamento();
 		this.duracao = tarefa.getDuracao();
 		this.finalizado = tarefa.isFinalizado();
 	}

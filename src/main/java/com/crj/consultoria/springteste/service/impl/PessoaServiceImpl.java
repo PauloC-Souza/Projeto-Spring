@@ -75,7 +75,7 @@ public class PessoaServiceImpl implements PessoaService {
 	            for (Pessoa item : listaPessoas) {
 	                PessoaDTO pessoaDTO = new PessoaDTO();
 	                pessoaDTO.setNome(item.getNome());
-	                pessoaDTO.setDescricao(DepartamentoEnum.toEnum(item.getDepartamento()).getDescricao());
+	                pessoaDTO.setDescricao(DepartamentoEnum.toEnum(item.getIdDepartamento()).getDescricao());
 	                pessoaDTO.setTodaHorasTarefas(tarefaRepository.buscarTotalHorasTarefasPorPessoa(item.getId()));
 	                listaPessoasDTO.add(pessoaDTO);
 	            }
@@ -88,7 +88,7 @@ public class PessoaServiceImpl implements PessoaService {
 	
 	private Pessoa montarEntity(PessoaDTO dto, Pessoa entity) {
 		entity.setNome(dto.getNome());
-		entity.setDepartamento(dto.getDepartamento());
+		entity.setIdDepartamento(dto.getDepartamento());
 		return entity;
 	}
 	

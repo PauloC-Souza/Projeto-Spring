@@ -1,20 +1,13 @@
 package com.crj.consultoria.springteste.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.crj.consultoria.springteste.enuns.DepartamentoEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,6 +19,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name= "pessoa")
 public class Pessoa implements Serializable {
 
 	/**
@@ -35,8 +29,8 @@ public class Pessoa implements Serializable {
 	 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
 	private Long id;
+	@Column(name = "nome")
 	private String nome;
-	private Integer departamento;
+	private Integer idDepartamento;
 }

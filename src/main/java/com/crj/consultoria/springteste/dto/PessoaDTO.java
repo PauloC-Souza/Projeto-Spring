@@ -30,7 +30,7 @@ public class PessoaDTO extends BaseDTO {
 	public PessoaDTO(Pessoa pessoa) {
 		this.id = pessoa.getId();
 		this.nome = pessoa.getNome();
-		this.departamento = pessoa.getDepartamento();
+		this.departamento = pessoa.getIdDepartamento();
 	}
 	
 	

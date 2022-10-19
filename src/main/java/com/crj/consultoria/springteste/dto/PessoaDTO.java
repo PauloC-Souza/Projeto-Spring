@@ -1,13 +1,13 @@
 package com.crj.consultoria.springteste.dto;
 
-import java.util.List;
-
 import com.crj.consultoria.springteste.entity.Pessoa;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,9 +19,11 @@ public class PessoaDTO extends BaseDTO {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private Long id;
+	@NotNull(message = "O nome não pode ser nulo")
 	private String nome;
+	@NotNull(message = "O departamento não pode ser nulo")
 	private Integer departamento;
 	private String descricao;
 	private Integer todaHorasTarefas;

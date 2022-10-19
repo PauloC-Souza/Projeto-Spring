@@ -2,6 +2,7 @@ package com.crj.consultoria.springteste.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
 import org.apache.catalina.connector.Response;
@@ -25,7 +26,7 @@ public class PessoaController {
 	PessoaService service;
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<String> cadastrarPessoa(@RequestBody PessoaDTO dto) {
+    public ResponseEntity<String> cadastrarPessoa(@RequestBody @Valid PessoaDTO dto) {
         return ResponseEntity.ok().body(service.cadastrarPessoa(dto));
     }
     

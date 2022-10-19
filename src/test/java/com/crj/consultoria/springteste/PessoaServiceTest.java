@@ -23,8 +23,8 @@ public class PessoaServiceTest {
     private PessoaService service;
 
 
-    private PessoaDTO PESSOA_1 = new PessoaDTO("Teste", 1);
-    private PessoaDTO PESSOA_2 = new PessoaDTO("Teste2", 1);
+    private final PessoaDTO PESSOA_1 = new PessoaDTO("Teste", 1);
+    private final PessoaDTO PESSOA_2 = new PessoaDTO("Teste2", 1);
 
     @Test
     public void CadastrarPessoaTest() {

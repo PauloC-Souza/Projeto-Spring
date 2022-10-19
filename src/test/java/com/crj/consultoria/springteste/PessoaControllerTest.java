@@ -2,8 +2,8 @@ package com.crj.consultoria.springteste;
 
 import com.crj.consultoria.springteste.controller.PessoaController;
 import com.crj.consultoria.springteste.dto.PessoaDTO;
-import com.crj.consultoria.springteste.entity.Pessoa;
 import com.crj.consultoria.springteste.repository.PessoaRepository;
+import com.crj.consultoria.springteste.repository.TarefaRepository;
 import com.crj.consultoria.springteste.service.PessoaService;
 import com.crj.consultoria.springteste.shared.Mensagens;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,6 +21,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @WebMvcTest(PessoaController.class)
 public class PessoaControllerTest {
 
@@ -33,6 +36,9 @@ public class PessoaControllerTest {
     @MockBean
     private PessoaRepository repository;
 
+    @MockBean
+    TarefaRepository tarefaRepository;
+
     private static ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
@@ -44,7 +50,6 @@ public class PessoaControllerTest {
     }
 
     private static String asJsonString(Object object) {
-
         try {
             return objectMapper.writeValueAsString(object);
         } catch (Exception e) {
@@ -57,14 +62,54 @@ public class PessoaControllerTest {
         PessoaDTO dto = new PessoaDTO();
         dto.setNome("Teste");
         dto.setDepartamento(1);
-        Mockito.when(this.service.cadastrarPessoa(Mockito.any(PessoaDTO.class)))
+        Mockito
+                .when(this.service.cadastrarPessoa(Mockito.any(PessoaDTO.class)))
                 .thenReturn(Mensagens.CADASTRO_SUCESSO);
-        mockMvc.perform(MockMvcRequestBuilders
+        mockMvc
+                .perform(MockMvcRequestBuilders
                 .post(("/pessoas"))
                 .content(asJsonString(dto))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.is(Mensagens.CADASTRO_SUCESSO)))
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+    }
+
+    @Test
+    public void deveRetornarLista_quandoBuscarPessoas() throws Exception {
+        PessoaDTO dto = new PessoaDTO();
+        dto.setNome("Teste");
+        dto.setDepartamento(1);
+        Mockito
+                .when(this.service.buscarPessoas())
+                .thenReturn(List.of(dto));
+        Mockito
+                .when(this.tarefaRepository.buscarTotalHorasTarefasPorPessoa(Mockito.any(Long.class)))
+                .thenReturn(2);
+        dto.setTodaHorasTarefas(2);
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .get(("/pessoas"))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].nome", Matchers.is("Teste")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].departamento", Matchers.is(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].todaHorasTarefas", Matchers.is(2)))
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+    }
+
+    @Test
+    public void deveRetornarVazio_quandoBuscarPessoas() throws Exception {
+        Mockito
+                .when(this.service.buscarPessoas())
+                .thenReturn(new ArrayList<>());
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .get(("/pessoas"))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
     }

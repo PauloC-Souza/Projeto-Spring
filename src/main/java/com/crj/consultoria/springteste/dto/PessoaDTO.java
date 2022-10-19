@@ -32,7 +32,9 @@ public class PessoaDTO extends BaseDTO {
 		this.nome = pessoa.getNome();
 		this.departamento = pessoa.getIdDepartamento();
 	}
-	
-	
-	
+
+	public PessoaDTO(String nome, Integer departamento) {
+		this.nome = nome;
+		this.departamento = departamento;
+	}
 }

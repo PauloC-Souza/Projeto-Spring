@@ -2,8 +2,8 @@ package com.crj.consultoria.springteste;
 
 import com.crj.consultoria.springteste.controller.PessoaController;
 import com.crj.consultoria.springteste.dto.PessoaDTO;
-import com.crj.consultoria.springteste.repository.PessoaRepository;
-import com.crj.consultoria.springteste.repository.TarefaRepository;
+import com.crj.consultoria.springteste.service.repository.PessoaRepository;
+import com.crj.consultoria.springteste.service.repository.TarefaRepository;
 import com.crj.consultoria.springteste.service.PessoaService;
 import com.crj.consultoria.springteste.shared.Mensagens;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,6 +23,9 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @WebMvcTest(PessoaController.class)
 public class PessoaControllerTest {
@@ -49,6 +52,8 @@ public class PessoaControllerTest {
         objectMapper = new ObjectMapper();
     }
 
+    private final PessoaDTO PESSOA_1 = new PessoaDTO("Teste", 1);
+
     private static String asJsonString(Object object) {
         try {
             return objectMapper.writeValueAsString(object);
@@ -59,16 +64,13 @@ public class PessoaControllerTest {
 
     @Test
     public void deveRetornarSucesso_quandoCadastrarPessoa() throws Exception {
-        PessoaDTO dto = new PessoaDTO();
-        dto.setNome("Teste");
-        dto.setDepartamento(1);
         Mockito
                 .when(this.service.cadastrarPessoa(Mockito.any(PessoaDTO.class)))
                 .thenReturn(Mensagens.CADASTRO_SUCESSO);
         mockMvc
                 .perform(MockMvcRequestBuilders
                 .post(("/pessoas"))
-                .content(asJsonString(dto))
+                .content(asJsonString(PESSOA_1))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.is(Mensagens.CADASTRO_SUCESSO)))
@@ -77,17 +79,32 @@ public class PessoaControllerTest {
     }
 
     @Test
+    public void deveRetornarErro_quandoCadastrarPessoa() throws Exception {
+        PESSOA_1.setNome(null);
+        Mockito
+                .when(this.service.cadastrarPessoa(Mockito.any(PessoaDTO.class)))
+                .thenReturn(null);
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .post(("/pessoas"))
+                        .content(asJsonString(PESSOA_1))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(jsonPath("$.message", is("Validation error")))
+                .andExpect(jsonPath("$.detailedMessages[0]", is("'nome' O nome não pode ser nulo")))
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+    }
+
+    @Test
     public void deveRetornarLista_quandoBuscarPessoas() throws Exception {
-        PessoaDTO dto = new PessoaDTO();
-        dto.setNome("Teste");
-        dto.setDepartamento(1);
         Mockito
                 .when(this.service.buscarPessoas())
-                .thenReturn(List.of(dto));
+                .thenReturn(List.of(PESSOA_1));
         Mockito
                 .when(this.tarefaRepository.buscarTotalHorasTarefasPorPessoa(Mockito.any(Long.class)))
                 .thenReturn(2);
-        dto.setTodaHorasTarefas(2);
+        PESSOA_1.setTodaHorasTarefas(2);
         mockMvc
                 .perform(MockMvcRequestBuilders
                         .get(("/pessoas"))

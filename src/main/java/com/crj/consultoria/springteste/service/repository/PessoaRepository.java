@@ -1,4 +1,4 @@
-package com.crj.consultoria.springteste.repository;
+package com.crj.consultoria.springteste.service.repository;
 
 import java.util.List;
 

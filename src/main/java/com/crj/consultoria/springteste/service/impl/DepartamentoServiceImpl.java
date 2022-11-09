@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.crj.consultoria.springteste.dto.DepartamentoDTO;
 import com.crj.consultoria.springteste.enuns.DepartamentoEnum;
-import com.crj.consultoria.springteste.repository.PessoaRepository;
-import com.crj.consultoria.springteste.repository.TarefaRepository;
+import com.crj.consultoria.springteste.service.repository.PessoaRepository;
+import com.crj.consultoria.springteste.service.repository.TarefaRepository;
 import com.crj.consultoria.springteste.service.DepartamentoService;
 
 @Service

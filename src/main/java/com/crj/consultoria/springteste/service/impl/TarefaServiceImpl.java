@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.crj.consultoria.springteste.dto.TarefaDTO;
 import com.crj.consultoria.springteste.entity.Pessoa;
 import com.crj.consultoria.springteste.entity.Tarefa;
-import com.crj.consultoria.springteste.repository.TarefaRepository;
+import com.crj.consultoria.springteste.service.repository.TarefaRepository;
 import com.crj.consultoria.springteste.service.PessoaService;
 import com.crj.consultoria.springteste.service.TarefaService;
 import com.crj.consultoria.springteste.service.exception.ObjectNotFoundException;
